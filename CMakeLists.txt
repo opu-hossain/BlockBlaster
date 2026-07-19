@@ -13,6 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(
     raylib
     GIT_REPOSITORY https://github.com/raysan5/raylib.git
