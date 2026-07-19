@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -311,7 +310,7 @@ void GamePlay() {
       reset_ball(&game.ball, &game);
       initialize(&game);
       game.score += 1;
-      sleep(3);
+      WaitTime(3.0);
       SetMusicVolume(bg_music, 1.0f);
       break;
     }
