@@ -241,16 +241,6 @@ void show_menu() {
   }
 }
 
-void playAudio(char audioFile[]) {
-  char path[512];
-  snprintf(path, sizeof(path), "%s%s", GetApplicationDirectory(), audioFile);
-
-  Music music = LoadMusicStream(audioFile);
-  PlayMusicStream(music);
-  UpdateMusicStream(music);
-  UnloadMusicStream(music);
-}
-
 int main() {
 
   InitWindow(WIDTH, HEIGHT, "Block Blaster");
