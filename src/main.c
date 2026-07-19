@@ -57,6 +57,8 @@ typedef struct {
 } Game;
 
 Game game = {0};
+Music bg_music;
+Sound impact_sound;
 
 Block block_stack[BLOCK_COUNT];
 
@@ -186,6 +188,7 @@ void splash_screen() {
   bool isClose = false;
 
   while (!(IsKeyPressed(KEY_ENTER))) {
+    UpdateMusicStream(bg_music);
     BeginDrawing();
     ClearBackground(LIGHTGRAY);
 
@@ -215,6 +218,7 @@ void show_menu() {
   float posY = 200;
 
   while (!(WindowShouldClose())) {
+    UpdateMusicStream(bg_music);
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
@@ -238,25 +242,41 @@ void show_menu() {
   }
 }
 
-void playAduio(char audioFile[]) {
+void playAudio(char audioFile[]) {
   char path[512];
   snprintf(path, sizeof(path), "%s%s", GetApplicationDirectory(), audioFile);
 
-  InitAudioDevice();
   Music music = LoadMusicStream(audioFile);
   PlayMusicStream(music);
   UpdateMusicStream(music);
   UnloadMusicStream(music);
-  CloseAudioDevice();
 }
 
 int main() {
 
   InitWindow(WIDTH, HEIGHT, "Block Blaster");
+  InitAudioDevice();
+
+  bg_music = LoadMusicStream(
+      TextFormat("%sassets/music.mp3", GetApplicationDirectory()));
+  if (!IsMusicValid(bg_music)) {
+    fprintf(stderr, "error: failed to load backgroud music\n");
+  } else {
+    PlayMusicStream(bg_music);
+  }
+
+  impact_sound =
+      LoadSound(TextFormat("%sassets/impact_1.ogg", GetApplicationDirectory()));
+  if (!IsSoundValid(impact_sound)) {
+    fprintf(stderr, "error: failed to load impact_sound\n");
+  }
 
   splash_screen();
-
   show_menu();
+
+  UnloadSound(impact_sound);
+  UnloadMusicStream(bg_music);
+  CloseAudioDevice();
 
   CloseWindow();
   return 0;
@@ -274,11 +294,11 @@ void GamePlay() {
   bool isPause = false;
 
   while (!WindowShouldClose()) {
+    SetMusicVolume(bg_music, 0.3f);
+    UpdateMusicStream(bg_music);
     game.delta_time = GetFrameTime();
     // crash if all blocks are destroyed
     if (game.destroyed_count >= BLOCK_COUNT || game.ball.pos.y >= HEIGHT - 20) {
-
-      playAduio("assets/game_over.wav");
 
       Vector2 font_size =
           MeasureTextEx(GetFontDefault(), "GAME OVER", 100, 10.0f);
@@ -292,6 +312,7 @@ void GamePlay() {
       initialize(&game);
       game.score += 1;
       sleep(3);
+      SetMusicVolume(bg_music, 1.0f);
       break;
     }
 
@@ -315,6 +336,7 @@ void GamePlay() {
           block_stack[i].is_destroyed = true;
           game.score += 1;
           game.ball_speed.y = BALL_SPEED;
+          PlaySound(impact_sound);
         }
       }
     }
@@ -421,7 +443,7 @@ void ScoreBoard() {
 
   read_from_file();
   while (!WindowShouldClose()) {
-
+    UpdateMusicStream(bg_music);
     char textBuffer[20];
 
     BeginDrawing();
