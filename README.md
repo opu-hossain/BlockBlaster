@@ -1,73 +1,28 @@
 ![Alt text for your image](https://i.ibb.co/t3RK0Gf/Screenshot-2024-07-13-at-6-23-51-PM.png)
 
-
 <div align="center">
   <img src="https://i.imgur.com/9xXbkxt.jpeg", width="250" />
   <img src="https://i.imgur.com/u7LlFWk.jpeg" width="250" />
   <img src="https://i.imgur.com/pUUEM1p.jpeg" width="250" />
 </div>
 
-
-
 # BlockBlaster
 
-BlockBlaster is a classic breakout-style game built using SDL2 and Raylib. The objective is to break all the blocks by bouncing a ball with a paddle. This project demonstrates the use of graphics libraries in C to create a fun and interactive game.
+BlockBlaster is a classic breakout-style game built using Raylib. The objective is to break all the blocks by bouncing a ball with a paddle. This project demonstrates the use of graphics libraries in C to create a fun and interactive game.
 
 ## Features
 
 - Classic breakout gameplay
 - Simple and intuitive controls
-- Graphics powered by SDL2 and Raylib
+- Graphics powered by Raylib
 
 ## Requirements
 
-- C Compiler (GCC recommended)
-- SDL2
-- Raylib
+- C Compiler (GCC, Clang, or MSVC)
+- CMake (4.3+)
+- Git (needed to fetch Raylib during the build)
 
-## Installation
-
-### Step 1: Install SDL2
-
-#### On Linux (Ubuntu/Debian)
-
-```sh
-sudo apt-get update
-sudo apt-get install libsdl2-dev
-```
-
-#### On macOS
-
-```sh
-brew install sdl2
-```
-
-#### On Windows
-
-Download the SDL2 development libraries from the [SDL2 website](https://www.libsdl.org/download-2.0.php) and follow the installation instructions for your specific development environment.
-
-### Step 2: Install Raylib
-
-#### On Linux (Ubuntu/Debian)
-
-```sh
-sudo apt-get install build-essential
-sudo apt-get install libgl1-mesa-dev libgles2-mesa-dev
-git clone https://github.com/raysan5/raylib.git
-cd raylib/src
-make
-sudo make install
-```
-
-#### On macOS
-
-```sh
-brew install raylib
-```
-
-#### On Windows
-
-Download the Raylib development libraries from the [Raylib website](https://www.raylib.com/) and follow the installation instructions for your specific development environment.
+Raylib itself does **not** need to be installed manually — CMake fetches and builds it from source automatically as part of the build process.
 
 ## Building the Project
 
@@ -78,17 +33,22 @@ git clone https://github.com/yourusername/BlockBlaster.git
 cd BlockBlaster
 ```
 
-2. Compile the project:
+2. Configure and build with CMake:
 
 ```sh
-gcc -o BlockBlaster main.c -lSDL2 -lraylib -lm
+cmake -B build
+cmake --build build
 ```
+
+The first build will take a few minutes, since it downloads and compiles Raylib from source. Subsequent builds are much faster.
 
 3. Run the executable:
 
 ```sh
-./BlockBlaster
+./build/BlockBlaster
 ```
+
+This process is the same on Linux, macOS, and Windows.
 
 ## Gameplay Instructions
 
@@ -106,7 +66,7 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 
-- Thanks to the SDL2 and Raylib developers for their excellent libraries.
+- Thanks to the Raylib developers for their excellent library.
 - Inspired by the classic arcade game Breakout.
 
 ## Contact
