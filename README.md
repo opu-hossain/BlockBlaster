@@ -44,11 +44,16 @@ The first build will take a few minutes, since it downloads and compiles Raylib 
 
 3. Run the executable:
 
+**Linux/macOS:**
 ```sh
 ./build/BlockBlaster
 ```
 
-This process is the same on Linux, macOS, and Windows.
+**Windows:**
+```powershell
+.\build\Debug\BlockBlaster.exe
+```
+> **Note:** This game is not release-ready yet — expect bugs and incomplete features.
 
 ## Gameplay Instructions
 
