@@ -126,7 +126,7 @@ bool check_collision(Entity *e1, Entity *e2) {
 
 void reset_blocks() {
   size_t block_stack_pos = 0;
-  for (size_t layers = 0; layers <= ITERATIONS; layers++) {
+  for (size_t layers = 0; layers < ITERATIONS; layers++) {
     for (size_t i = 0; i < BLOCK_COUNT / ITERATIONS; i++) {
       Block block = {
           .entity = init_entity(((BLOCK_WIDTH + 10) * i + (BLOCK_WIDTH - 5)),
